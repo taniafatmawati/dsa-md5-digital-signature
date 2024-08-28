@@ -12,7 +12,7 @@ def dss_verify(m, r, s, p, q, g, y):
 
 def main():
 
-    kalimat = input("\nMasukkan kalimat (maksimum 64 karakter)\t\t: ")
+    kalimat = input("\n\nMasukkan kalimat (maksimum 64 karakter)\t\t: ")
         
     if len(kalimat) > 64:
         print("\n\nError: Jumlah karakter melebihi batas maksimum.\n\n\n")
