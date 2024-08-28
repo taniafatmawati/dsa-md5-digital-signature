@@ -1,7 +1,7 @@
-from dss_hash import modinv,hash_function
+from dss_hash import modinv, hash_function
 
 def dss_verify(m, r, s, p, q, g, y):
-    # Proses verifikasi
+    # Verification process
     e = m
     s_inv = modinv(s, q)
     w = (s_inv % q)
@@ -12,32 +12,32 @@ def dss_verify(m, r, s, p, q, g, y):
 
 def main():
 
-    kalimat = input("\n\nMasukkan kalimat (maksimum 64 karakter)\t\t: ")
+    kalimat = input("\n\nEnter sentence (maximum 64 characters)\t\t: ")
         
     if len(kalimat) > 64:
-        print("\n\nError: Jumlah karakter melebihi batas maksimum.\n\n\n")
+        print("\n\nError: Character count exceeds the maximum limit.\n\n\n")
         return
     
-    # Nilai hash pesan
+    # Message hash value
     m = hash_function(kalimat)
 
-    # Input kunci publik (p, q, g, y); tanda tangan (r, s)
-    p = int(input("\nMasukkan nilai kunci publik (p) \t\t: "))
-    q = int(input("Masukkan nilai kunci publik (q) \t\t: "))
-    g = int(input("Masukkan nilai kunci publik (g) \t\t: "))
-    y = int(input("Masukkan nilai kunci publik (y) \t\t: "))
-    r = int(input("\nMasukkan nilai tanda tangan (r) \t\t: "))
-    s = int(input("Masukkan nilai tanda tangan (s) \t\t: "))
+    # Input public key (p, q, g, y); signature (r, s)
+    p = int(input("\nEnter public key value (p) \t\t: "))
+    q = int(input("Enter public key value (q) \t\t: "))
+    g = int(input("Enter public key value (g) \t\t: "))
+    y = int(input("Enter public key value (y) \t\t: "))
+    r = int(input("\nEnter signature value (r) \t\t: "))
+    s = int(input("Enter signature value (s) \t\t: "))
 
-    # Proses verifikasi
+    # Verification process
     is_verified = dss_verify(m, r, s, p, q, g, y)
     if is_verified:
         print('\n\n------------------------------------------')
-        print('--- Tanda tangan digital terverifikasi ---')
+        print('--- Digital signature verified ---')
         print('------------------------------------------\n\n')
     else:
         print('\n\n----------------------------------------')
-        print('--- Tanda tangan digital tidak valid ---')
+        print('--- Digital signature is invalid ---')
         print('----------------------------------------\n\n')
 
 if __name__ == "__main__":
