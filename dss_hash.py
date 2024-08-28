@@ -1,4 +1,4 @@
-# Variabel untuk fungsi F
+# Variable for function F
 F_operations = [
     ['ABCD', 0, 7, 1],
     ['DABC', 1, 12, 2],
@@ -18,7 +18,7 @@ F_operations = [
     ['BCDA', 15, 22, 16]
 ]
 
-# Variabel untuk fungsi G
+# Variable for function G
 G_operations = [
     ['ABCD', 1, 5, 17],
     ['DABC', 6, 9, 18],
@@ -39,7 +39,7 @@ G_operations = [
 ]
 
 
-# Variabel untuk fungsi H
+# Variable for function H
 H_operations = [
     ['ABCD', 5, 4, 33],
     ['DABC', 8, 11, 34],
@@ -59,7 +59,7 @@ H_operations = [
     ['BCDA', 2, 23, 48]
 ]
 
-# Variabel untuk fungsi I
+# Variable for function I
 I_operations = [
     ['ABCD', 0, 6, 49],
     ['DABC', 7, 10, 50],
@@ -79,7 +79,7 @@ I_operations = [
     ['BCDA', 9, 21, 64]
 ]
 
-# Variabel T[i]
+# T[i] variable
 T = [
     0xD76AA478, 0xE8C7B756, 0x242070DB, 0xC1BDCEEE, 0xF57C0FAF,
     0x4787C62A, 0xA8304613, 0xFD469501, 0x698098D8, 0x8B44F7AF,
@@ -96,7 +96,7 @@ T = [
     0xF7537E82, 0xBD3AF235, 0x2AD7D2BB, 0xEB86D391
 ]
 
-# Fungsi konversi desimal ke biner
+# Function to convert decimal to binary
 def destoBiner(input_desimal):
     if input_desimal == 0:
         return [0]
@@ -111,40 +111,40 @@ def destoBiner(input_desimal):
     binary.reverse()
     return binary
 
-# Fungsi konversi biner ke desimal
+# Function to convert binary to decimal
 def binerToDes(binary):
     desimal = 0
     for bit in binary:
         desimal = (desimal << 1) | bit
     return desimal
 
-# Fungsi konversi desimal ke heksadesimal
+# Function to convert decimal to hexadecimal
 def desimalToHex(input_desimal):
     return hex(input_desimal)
 
-# Fungsi konversi heksadesimal ke desimal
+# Function to convert hexadecimal to decimal
 def hexToDes(input_hex):
     return int(input_hex, 16)
 
-# Fungsi konversi heksadesimal ke biner
+# Function to convert hexadecimal to binary
 def hex_to_bin(hex_string):
     binary_string = bin(int(hex_string, 16))[2:]
     return binary_string.zfill((len(hex_string)-2) * 4)
 
-# Fungsi konversi biner ke heksadesimal
+# Function to convert binary to hexadecimal
 def bin_to_hex(binary_string):
     hex_string = hex(int(binary_string, 2))[2:]
     return hex_string.upper()
 
+# Perform CLS by s bits
 def cls(value,l,s):
-    # Lakukan CLS sebanyak s bit
     return ((value << s) | (value >> (l - s))) & 0xFFFFFFFF
 
-# Fungsi putaran pertama MD5
+# Function for the first round of MD5
 def putaran(a, b, F, X, s, T):
     binary = hex_to_bin(hex(a + F + X + T))
     temp = cls((a + F + X + T),len(binary),s)
-    # Hitung hasil putaran pertama
+    # Calculate the first round result
     a = b + temp
     return a & 0xFFFFFFFF
 
@@ -161,27 +161,27 @@ def fI(b, c, d):
     return c ^ (b & ~d)
 
 def konversi_blok(kalimat):
-    panjang_pesan = len(kalimat) * 8
+    message_length = len(kalimat) * 8
     kalimat_bin = ''.join(format(ord(c), '08b') for c in kalimat)
 
-    # Hitung panjang padding
-    panjang_padding = (448 - (panjang_pesan + 8) % 512) % 512
-    kalimat_bin += '1' + '0' * panjang_padding  # Tambahkan bit padding
+    # Calculate padding length
+    padding_length = (448 - (message_length + 8) % 512) % 512
+    kalimat_bin += '1' + '0' * padding_length  # Add padding bits
 
-    # Tambahkan panjang pesan di akhir, gunakan 64 bit
-    panjang_pesan_bin = format(panjang_pesan, '064b')
-    kalimat_bin += panjang_pesan_bin
+    # Append message length at the end, use 64 bits
+    message_length_bin = format(message_length, '064b')
+    kalimat_bin += message_length_bin
 
-    hasil_konversi = []
+    conversion_result = []
     for i in range(0, len(kalimat_bin), 32):
         blok_bin = kalimat_bin[i:i+32]
         blok_hex = '{:08X}'.format(int(blok_bin, 2))
-        hasil_konversi.append(blok_hex)
+        conversion_result.append(blok_hex)
 
-    return hasil_konversi
+    return conversion_result
 
 def modinv(a, m):
-    # Menghitung invers modulo a^(-1) mod m
+    # Calculate modular inverse a^(-1) mod m
     m0, x0, x1 = m, 0, 1
     while a > 1:
         q = a // m
@@ -189,21 +189,21 @@ def modinv(a, m):
         x0, x1 = x1 - q * x0, x0
     return x1 + m0 if x1 < 0 else x1
 
-def hash_function (kalimat):
-    hasil_konversi = konversi_blok(kalimat)
+def hash_function(kalimat):
+    conversion_result = konversi_blok(kalimat)
 
-    # Inisialisasi buffer MD
+    # Initialize MD buffer
     a = 0x67452301
     b = 0xEFCDAB89
     c = 0x98BADCFE
     d = 0x10325467
     
-    # Putaran
+    # Rounds
     for round_group in [F_operations, G_operations, H_operations, I_operations]:
         for row in range(16):
-            X = hexToDes(hasil_konversi[round_group[row][1]])
+            X = hexToDes(conversion_result[round_group[row][1]])
 
-            # Memilih fungsi berdasarkan round_group
+            # Select function based on round_group
             if round_group == F_operations:
                 F_result = fF(b, c, d)
             elif round_group == G_operations:
@@ -213,21 +213,22 @@ def hash_function (kalimat):
             elif round_group == I_operations:
                 F_result = fI(b, c, d)
 
-            # Memanggil putaran dengan parameter yang sesuai
-            i = round_group[row][3]-1
+            # Call the round with appropriate parameters
+            i = round_group[row][3] - 1
             a = putaran(a, b, F_result, X, round_group[row][2], T[i])
             a, b, c, d = d, a, b, c
 
-    # Tambahkan hasil akhir ke buffer MD5
+    # Add the final result to the MD5 buffer
     a = (a + 0x67452301) & 0xFFFFFFFF
     b = (b + 0xEFCDAB89) & 0xFFFFFFFF
     c = (c + 0x98BADCFE) & 0xFFFFFFFF
     d = (d + 0x10325467) & 0xFFFFFFFF
 
-    # Format hasil akhir ke dalam satu nilai
+    # Format the final result into a single value
     result_hex = f'{d:08X}{c:08X}{b:08X}{a:08X}'
 
-    # Konversi ke desimal
+    # Convert to decimal
     result_decimal = int(result_hex, 16)
 
     return result_decimal
+    
