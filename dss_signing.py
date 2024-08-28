@@ -49,7 +49,7 @@ def dss_sign(m, p, q, g, x, k):
 
 def main():
 
-    kalimat = input("\nMasukkan kalimat (maksimum 64 karakter)\t\t: ")
+    kalimat = input("\n\nMasukkan kalimat (maksimum 64 karakter)\t\t: ")
     
     if len(kalimat) > 64:
         print("\n\nError: Jumlah karakter melebihi batas maksimum.\n\n\n")
@@ -80,7 +80,7 @@ def main():
 
     # Proses penandatanganan
     r, s = dss_sign(m, p, q, g, x, k)
-    print(f'\n\nTanda tangan (r, s) \t\t= ({r}, {s}) \n')
+    print(f'\n\nTanda tangan (r, s) \t\t= ({r}, {s}) \n\n')
 
 if __name__ == "__main__":
     main()
