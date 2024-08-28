@@ -1,4 +1,4 @@
-# DSA with MD5 for Digital Signatures
+# 🔒 DSA with MD5 for Digital Signatures
 
 This project aims to implement a digital signature system using the Digital Signature Algorithm (DSA) combined with the Message-Digest Algorithm 5 (MD5) hash function. The goal is to create a secure method for ensuring the integrity and authenticity of digital messages.
 
