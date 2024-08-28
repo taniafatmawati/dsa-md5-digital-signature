@@ -89,6 +89,8 @@ This project aims to implement a digital signature system using the Digital Sign
 
 Includes source code files, usage instructions, and additional details in this README.md.
 
+**Online Documentation**: For a detailed guide and interactive interface, visit the [Digital Signature App Documentation](https://taniafatma-digital-signature-app.streamlit.app/).
+
 ## 📝 Conclusion
 
 The integration of DSA and MD5 provides a robust framework for digital signatures, ensuring the integrity and authenticity of digital communications. This project offers practical implementation and insights into digital signatures.
